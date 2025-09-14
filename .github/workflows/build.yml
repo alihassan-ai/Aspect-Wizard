@@ -28,21 +28,22 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      # ---- PyTorch per-OS ----
+      # ---- PyTorch per-OS (no +cpu on macOS) ----
       - name: Install PyTorch (macOS)
         if: runner.os == 'macOS'
         run: |
           python -m pip install --upgrade pip
-          pip install --no-deps torch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1
+          pip install --no-deps torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1
 
       - name: Install PyTorch (Linux/Windows)
         if: runner.os != 'macOS'
+        shell: bash
         run: |
           python -m pip install --upgrade pip
-          pip install --no-deps torch==2.3.1+cpu torchvision==0.18.1+cpu torchaudio==2.3.1+cpu \
-            --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install --no-deps torch==2.4.1+cpu torchvision==0.19.1+cpu torchaudio==2.4.1+cpu \
+            --index-url https://download.pytorch.org/whl/cpu
 
-      # ---- Rest of dependencies ----
+      # ---- Remaining deps & PyInstaller ----
       - name: Install remaining dependencies
         run: |
           pip install -r requirements.txt

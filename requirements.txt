@@ -9,7 +9,7 @@ virtualenv>=20.25.0
 # =============================
 # Core UI
 # =============================
-gradio==3.50.2   # keep as requested
+gradio==3.50.2
 
 # =============================
 # Image Processing
@@ -21,8 +21,8 @@ scikit-image>=0.24.0,<1.0.0
 # =============================
 # Numerical / Data
 # =============================
-# Gradio 3.50.2 needs numpy <1.24
-numpy>=1.21.0,<1.24
+# Gradio 3.50.2 is incompatible with NumPy 2.x
+numpy==1.26.4
 matplotlib>=3.9.2,<4.0.0
 tqdm>=4.66.5,<5.0.0
 joblib>=1.4.2,<2.0.0
@@ -30,7 +30,7 @@ pandas>=2.2.2,<3.0.0
 
 # =============================
 # Deep Learning / GPU
-# We'll install OS-appropriate wheels in the workflow, then this spec will match.
+# (Installed per-OS in the workflow; these ranges keep pip happy)
 torch>=2.3.1,<2.5.0
 torchvision>=0.18.0,<0.20.0
 torchaudio>=2.3.1,<2.5.0
