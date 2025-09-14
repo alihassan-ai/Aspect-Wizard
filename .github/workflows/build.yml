@@ -24,6 +24,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
+        shell: bash   # ✅ use bash everywhere
         run: |
           python -m pip install --upgrade pip
           if [ "$RUNNER_OS" = "macOS" ]; then
