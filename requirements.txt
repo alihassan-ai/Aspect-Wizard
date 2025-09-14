@@ -1,0 +1,64 @@
+# =============================
+# Core Python & Virtual Env
+# =============================
+pip>=24.0
+setuptools>=70.0
+wheel>=0.43.0
+virtualenv>=20.25.0
+
+# =============================
+# Core UI
+# =============================
+# Use latest stable Gradio (3.x is deprecated; 4.x has breaking changes)
+gradio==3.50.2
+
+# =============================
+# Image Processing
+# =============================
+Pillow>=10.4.0
+opencv-python>=4.10.0
+scikit-image>=0.24.0
+
+# =============================
+# Numerical / Data
+# =============================
+numpy>=2.1.0
+matplotlib>=3.9.2
+tqdm>=4.66.5
+joblib>=1.4.2
+pandas>=2.2.2
+
+# =============================
+# Deep Learning / GPU
+# =============================
+# Install PyTorch with CUDA if available (auto handled by torch installer).
+# Works on Linux and Windows.
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
+
+# =============================
+# Backend / API / Networking
+# =============================
+requests>=2.32.3
+httpx>=0.27.0
+psutil>=6.0.0
+
+
+
+# =============================
+# Extra Utilities
+# =============================
+# File parsing and JSON helpers
+ujson>=5.10.0
+orjson>=3.10.7
+
+# System / cross-platform helpers
+platformdirs>=4.3.6
+
+# =============================
+# Optional but useful
+# =============================
+# Rich terminal output & logging
+rich>=13.9.2
+loguru>=0.7.2
