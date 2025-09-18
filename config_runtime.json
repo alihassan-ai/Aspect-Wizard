@@ -1,0 +1,14 @@
+{
+  "DEFAULT_INPUT_DIR": "C:\\Users\\Ali Hassan\\Desktop\\Aspect-Wizard-main\\Projects\\hehe\\i",
+  "CLASSIFY_OUT_ROOT": "C:\\Users\\Ali Hassan\\Desktop\\Aspect-Wizard-main\\Projects\\hehe\\aw_out",
+  "SCALE_OUT_ROOT": "C:\\Users\\Ali Hassan\\Desktop\\Aspect-Wizard-main\\Projects\\hehe\\aw_scaled",
+  "FORGE_IMG2IMG_OUT": "C:\\Users\\Ali Hassan\\Desktop\\Aspect-Wizard-main\\Projects\\hehe\\forge_batch_img2img",
+  "FORGE_INPAINT_OUT": "C:\\Users\\Ali Hassan\\Desktop\\Aspect-Wizard-main\\Projects\\hehe\\forge_batch_inpaint",
+  "MODEL_DIR_SD": "/workspace/ForgeUI/models/Stable-diffusion",
+  "MODEL_DIR_LORA": "/workspace/ForgeUI/models/Lora",
+  "COMFY_MASK_WORKFLOW": "/workspace/ComfyUI/user/default/workflows/mw.json",
+  "COMFY_OUTPUT_MASK_DIR": "/workspace/ComfyUI/output/Masked",
+  "FINAL_MASK_DIR": "C:\\Users\\Ali Hassan\\Desktop\\Aspect-Wizard-main\\Projects\\hehe\\Masked",
+  "FORGE_BASE": "http://127.0.0.1:7801",
+  "COMFY_BASE": "http://127.0.0.1:7802"
+}

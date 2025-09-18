@@ -1,0 +1,107 @@
+name: Build and Release App (Latest)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build executable
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            pyinstaller --onefile --noconsole --icon=ui/icon.ico app.py `
+              --add-data "Templates;Templates" `
+              --add-data "ui;ui" `
+              --add-data "services;services" `
+              --add-data "pipeline;pipeline" `
+              --add-data "utils;utils"
+
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            pyinstaller --onefile --windowed --name "AspectWizard" --icon=ui/icon.icns app.py \
+              --add-data "Templates:Templates" \
+              --add-data "ui:ui" \
+              --add-data "services:services" \
+              --add-data "pipeline:pipeline" \
+              --add-data "utils:utils"
+
+            mkdir -p "dist/AspectWizard.app/Contents/MacOS"
+            mkdir -p "dist/AspectWizard.app/Contents/Resources"
+
+            mv dist/AspectWizard "dist/AspectWizard.app/Contents/MacOS/"
+
+            # Write Info.plist safely
+            cat > dist/AspectWizard.app/Contents/Info.plist << 'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDisplayName</key>
+  <string>AspectWizard</string>
+  <key>CFBundleIdentifier</key>
+  <string>com.aspectwizard.app</string>
+  <key>CFBundleVersion</key>
+  <string>1.0.0</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleExecutable</key>
+  <string>AspectWizard</string>
+</dict>
+</plist>
+PLIST
+
+          else
+            pyinstaller --onefile --windowed --name "aspect-wizard" app.py \
+              --add-data "Templates:Templates" \
+              --add-data "ui:ui" \
+              --add-data "services:services" \
+              --add-data "pipeline:pipeline" \
+              --add-data "utils:utils"
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ matrix.os }}
+          path: dist/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./dist
+
+      - name: Create/Update GitHub Release (rolling latest)
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Latest Build
+          tag_name: latest
+          files: dist/**/*
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
