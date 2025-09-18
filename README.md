@@ -1,6 +1,6 @@
 # Aspect-Wizard
 
-*(Add your app description here)*
+
 
 ---
 
